@@ -10,21 +10,20 @@ import 'view/verify_email_view.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized;
   runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: HomePage(),
-      routes: {
-        loginRoute: (context) => const LoginView(),
-        registerRoute: (context) => const RegisterView(),
-        notesRoute: (context) => const NoteView(),
-        verifyEmailRoute: (context) => const VerifyEmailView(),
-      },
-    )
-  );
+    debugShowCheckedModeBanner: false,
+    title: 'My Notes',
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      useMaterial3: true,
+    ),
+    home: HomePage(),
+    routes: {
+      loginRoute: (context) => const LoginView(),
+      registerRoute: (context) => const RegisterView(),
+      notesRoute: (context) => const NoteView(),
+      verifyEmailRoute: (context) => const VerifyEmailView(),
+    },
+  ));
 }
 
 class HomePage extends StatelessWidget {
@@ -38,15 +37,9 @@ class HomePage extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = AuthService.firebase().currentUser;
-              if (user != null) {
-                if (user.isEmailVerified) {
-                  devtools.log('email verified');
-                } else {
-                  return const VerifyEmailView();
-                }
-              } else {
-                return const LoginView();
-              }
+              if (user == null) return const LoginView();
+              if (!user.isEmailVerified) return const VerifyEmailView();
+              devtools.log('email verified');
               return const Text('Done');
             default:
               return const CircularProgressIndicator();
