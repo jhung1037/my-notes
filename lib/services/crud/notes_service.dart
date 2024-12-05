@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:mynotes/services/crud/crud_exception.dart';
 import 'package:path_provider/path_provider.dart'
     show MissingPlatformDirectoryException, getApplicationDocumentsDirectory;
 import 'package:path/path.dart' show join;
-
-import 'crud_exception.dart';
+import 'package:sqflite/sqflite.dart';
 
 class NotesService {
   Database? _db;
