@@ -9,7 +9,7 @@ import 'package:path/path.dart' show join;
 import 'crud_exception.dart';
 
 class NotesService {
-  Datebase? _db;
+  Database? _db;
 
   List<DatabaseNote> _notes = [];
 
@@ -110,7 +110,7 @@ class NotesService {
   Future<DatabaseNote> createNote({required DatabaseUser owner}) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
-    final dbUser = await db.getUser(email: owner.email);
+    final dbUser = await getUser(email: owner.email);
     if (dbUser != owner) throw CouldNotFindUser();
 
     const text = '';
@@ -175,7 +175,7 @@ class NotesService {
     if (deleteCount != 1) throw CouldNotDeleteUser();
   }
 
-  Datebase _getDatabaseOrThrow() {
+  Database _getDatabaseOrThrow() {
     final db = _db;
     if (db == null) throw DatabaseIsNotOpenException();
     return db;
