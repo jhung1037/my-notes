@@ -32,7 +32,7 @@ class NotesService {
       _notesStreamController.stream.filter((note) {
         final currentUser = _user;
         if (currentUser != null) {
-          return note.userId == currentUser.id;
+          return note.user_id == currentUser.id;
         } else {
           throw UserShouldBeSetBeforeReadingAllNotes();
         }
