@@ -16,7 +16,7 @@ void main() {
     });
 
     test('Should be able to be initialized', () async {
-      await provider.initialize();
+      await provider.initialise();
       expect(provider.isInitialized, true);
     });
 
@@ -27,7 +27,7 @@ void main() {
     test(
       'Should be able to intialize in less than 2 seconds',
       () async {
-        await provider.initialize();
+        await provider.initialise();
         expect(provider.isInitialized, true);
       },
       timeout: const Timeout(Duration(seconds: 2)),
@@ -87,7 +87,7 @@ class MockAuthProvider implements AuthProvider {
   AuthUser? get currentUser => _user;
 
   @override
-  Future<void> initialize() async {
+  Future<void> initialise() async {
     await Future.delayed(const Duration(seconds: 1));
     setIsInitialized = true;
   }
