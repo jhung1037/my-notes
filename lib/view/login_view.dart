@@ -73,47 +73,49 @@ class _LoginViewState extends State<LoginView> {
           appBar: AppBar(
             title: const Text('Login'),
           ),
-          body: Column(
-            children: [
-              TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration:
-                    const InputDecoration(hintText: 'Enter your email here'),
-              ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration:
-                    const InputDecoration(hintText: 'Enter your password here'),
-              ),
-              // BlocListener<AuthBloc, AuthState>(
-              //   listener: (context, state) async {
-              //     if (state is AuthStateLoggedOut) {
-              //       if (state.exception is UserNotFoundAuthException) {
-              //         await showErrorDialog(
-              //           context,
-              //           context.loc.login_error_cannot_find_user,
-              //         );
-              //       } else if (state.exception is WrongPasswordAuthException) {
-              //         await showErrorDialog(
-              //           context,
-              //           context.loc.login_error_wrong_credentials,
-              //         );
-              //       } else if (state.exception is GenericAuthException) {
-              //         await showErrorDialog(
-              //           context,
-              //           context.loc.login_error_auth_error,
-              //         );
-              //       }
-              //     }
-              //   },
-              // ),
-              TextButton(
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration:
+                      const InputDecoration(hintText: 'Enter your email here'),
+                ),
+                TextField(
+                  controller: _password,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration:
+                      const InputDecoration(hintText: 'Enter your password here'),
+                ),
+                // BlocListener<AuthBloc, AuthState>(
+                //   listener: (context, state) async {
+                //     if (state is AuthStateLoggedOut) {
+                //       if (state.exception is UserNotFoundAuthException) {
+                //         await showErrorDialog(
+                //           context,
+                //           context.loc.login_error_cannot_find_user,
+                //         );
+                //       } else if (state.exception is WrongPasswordAuthException) {
+                //         await showErrorDialog(
+                //           context,
+                //           context.loc.login_error_wrong_credentials,
+                //         );
+                //       } else if (state.exception is GenericAuthException) {
+                //         await showErrorDialog(
+                //           context,
+                //           context.loc.login_error_auth_error,
+                //         );
+                //       }
+                //     }
+                //   },
+                // ),
+                TextButton(
                   onPressed: () async {
                     final email = _email.text;
                     final password = _password.text;
@@ -144,17 +146,29 @@ class _LoginViewState extends State<LoginView> {
                     //   await showErrorDialog(context, 'Authentication error');
                     // }
                   },
-                  child: const Text('Login')),
-              TextButton(
+                  child: const Text('Login'),
+                ),
+                TextButton(
                   onPressed: () {
-                    context
-                        .read<AuthBloc>()
-                        .add(const AuthEventShouldRegister());
-                    // Navigator.of(context).pushNamedAndRemoveUntil(
-                    //     registerRoute, (route) => false);
+                    context.read<AuthBloc>().add(
+                          const AuthEventForgotPassword(),
+                        );
                   },
-                  child: const Text('Not registered yet? Register here!'))
-            ],
+                  child: Text(
+                    context.loc.login_view_forgot_password,
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {
+                      context
+                          .read<AuthBloc>()
+                          .add(const AuthEventShouldRegister());
+                      // Navigator.of(context).pushNamedAndRemoveUntil(
+                      //     registerRoute, (route) => false);
+                    },
+                    child: const Text('Not registered yet? Register here!'))
+              ],
+            ),
           )),
     );
   }
